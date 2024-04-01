@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		10E2D1212BBACADA00747B5A /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E2D1202BBACADA00747B5A /* Model.swift */; };
+		10E2D1472BBB3E0200747B5A /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E2D1462BBB3E0200747B5A /* ErrorHandler.swift */; };
 		10F1705B2BB19B5200E3166D /* SwiftUIAsyncAPIProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F1705A2BB19B5200E3166D /* SwiftUIAsyncAPIProjectApp.swift */; };
 		10F1705D2BB19B5200E3166D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F1705C2BB19B5200E3166D /* ContentView.swift */; };
 		10F1705F2BB19B5400E3166D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 10F1705E2BB19B5400E3166D /* Assets.xcassets */; };
@@ -14,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		10E2D1202BBACADA00747B5A /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		10E2D1462BBB3E0200747B5A /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		10F170572BB19B5200E3166D /* SwiftUIAsyncAPIProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIAsyncAPIProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10F1705A2BB19B5200E3166D /* SwiftUIAsyncAPIProjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIAsyncAPIProjectApp.swift; sourceTree = "<group>"; };
 		10F1705C2BB19B5200E3166D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,6 +57,8 @@
 			children = (
 				10F1705A2BB19B5200E3166D /* SwiftUIAsyncAPIProjectApp.swift */,
 				10F1705C2BB19B5200E3166D /* ContentView.swift */,
+				10E2D1202BBACADA00747B5A /* Model.swift */,
+				10E2D1462BBB3E0200747B5A /* ErrorHandler.swift */,
 				10F1705E2BB19B5400E3166D /* Assets.xcassets */,
 				10F170602BB19B5400E3166D /* Preview Content */,
 			);
@@ -137,6 +143,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10E2D1212BBACADA00747B5A /* Model.swift in Sources */,
+				10E2D1472BBB3E0200747B5A /* ErrorHandler.swift in Sources */,
 				10F1705D2BB19B5200E3166D /* ContentView.swift in Sources */,
 				10F1705B2BB19B5200E3166D /* SwiftUIAsyncAPIProjectApp.swift in Sources */,
 			);
