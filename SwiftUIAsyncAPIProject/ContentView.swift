@@ -18,90 +18,89 @@ struct ContentView: View {
     
     var body: some View {
         
-        ScrollView{
-            VStack {
+        NavigationStack {
+            
+            ScrollView{
                 
-                TextField("Write a GitHub username", text: $searchText)
+                
+                VStack {
+                    AsyncImage(url: URL(string: user?.avatarUrl ?? "")) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+                    } placeholder: {
+                        Circle()
+                            .foregroundColor(.gray)
+                    }
+                    .frame(width: 200, height: 200)
                     .padding()
-                
-                Button(action: {
-                    username = searchText
-                    getUserAsync()
-                }) {
-                    Text("Search")
-                }
-                .padding()
-                
-                
-                AsyncImage(url: URL(string: user?.avatarUrl ?? "")) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-                } placeholder: {
-                    Circle()
-                        .foregroundColor(.gray)
-                }
-                .frame(width: 200, height: 200)
-                .padding()
-                
-                
-                
-                Text(user?.login ?? "Username")
-                    .bold()
-                    .font(.title3)
-                    .padding()
-                
-                if user?.createdAt != nil {
                     
-                    if let date = formatDateFromString(user?.createdAt ?? "") {
-                        // Format date as desired
-                        Text("Created at \(formatDate(date))")
-                            .font(.title3)
+                    
+                    
+                    Text(user?.login ?? "Username")
+                        .bold()
+                        .font(.title3)
+                        .padding()
+                    
+                    if user?.createdAt != nil {
+                        
+                        if let date = formatDateFromString(user?.createdAt ?? "") {
+                            // Format date as desired
+                            Text("Created at \(formatDate(date))")
+                                .font(.title3)
+                                .padding()
+                        }
+                        
+                        
+                        
+                        
+                    }
+                    
+                    if user?.publicRepos != nil {
+                        Text("Public repos: \(String(describing: user!.publicRepos))")
                             .padding()
                     }
                     
+                    Text(user?.bio ?? "user has no description")
+                    
+                    Spacer()
+                }
+                .padding()
+                .task {
+                    do {
+                        user = try await getUser()
+                    }
+                    catch GHError.invalidData {
+                        print("Invalid Data")
+                    } catch GHError.invalidUrl{
+                        print("Invalid Url")
+                    } catch GHError.invalidResponse{
+                        print("Invalid Response")
+                    } catch {
+                        print("Unexpected Error")
+                    }
+                }
+                .alert(isPresented: $showAlert) {
+                    switch errorType {
+                    case .invalidUrl:
+                        return Alert(title: Text("Invalid URL"), message: Text("The URL is invalid."), dismissButton: .default(Text("OK")))
+                    case .invalidResponse:
+                        return Alert(title: Text("Invalid Response"), message: Text("The response from the server is invalid."), dismissButton: .default(Text("OK")))
+                    case .invalidData:
+                        return Alert(title: Text("Invalid Data"), message: Text("The data received from the server is invalid."), dismissButton: .default(Text("OK")))
+                    case .none:
+                        return Alert(title: Text("Unknown Error"), message: Text("An unknown error occurred."), dismissButton: .default(Text("OK")))
+                    }
                     
                     
-                    
-                }
-                
-                if user?.publicRepos != nil {
-                    Text("Public repos: \(String(describing: user!.publicRepos))")
-                        .padding()
-                }
-                
-                Text(user?.bio ?? "user has no description")
-                
-                Spacer()
+                }.searchable(text: $searchText, prompt: "Write a GitHub username")
+                    .onSubmit(of: .search) {
+                        username = searchText
+                        getUserAsync()
+                    }
             }
-            .padding()
-            .task {
-                do {
-                    user = try await getUser()
-                }
-                catch GHError.invalidData {
-                    print("Invalid Data")
-                } catch GHError.invalidUrl{
-                    print("Invalid Url")
-                } catch GHError.invalidResponse{
-                    print("Invalid Response")
-                } catch {
-                    print("Unexpected Error")
-                }
-            }
-            .alert(isPresented: $showAlert) {
-                switch errorType {
-                case .invalidUrl:
-                    return Alert(title: Text("Invalid URL"), message: Text("The URL is invalid."), dismissButton: .default(Text("OK")))
-                case .invalidResponse:
-                    return Alert(title: Text("Invalid Response"), message: Text("The response from the server is invalid."), dismissButton: .default(Text("OK")))
-                case .invalidData:
-                    return Alert(title: Text("Invalid Data"), message: Text("The data received from the server is invalid."), dismissButton: .default(Text("OK")))
-                case .none:
-                    return Alert(title: Text("Unknown Error"), message: Text("An unknown error occurred."), dismissButton: .default(Text("OK")))
-                }
-            }
+            
         }
     }
     
@@ -147,16 +146,16 @@ struct ContentView: View {
     }
     
     func formatDateFromString(_ dateString: String) -> Date? {
-          let dateFormatter = ISO8601DateFormatter()
-          dateFormatter.formatOptions = [.withInternetDateTime]
-          return dateFormatter.date(from: dateString)
-      }
+        let dateFormatter = ISO8601DateFormatter()
+        dateFormatter.formatOptions = [.withInternetDateTime]
+        return dateFormatter.date(from: dateString)
+    }
     
     func formatDate(_ date: Date) -> String {
-         let dateFormatter = DateFormatter()
-         dateFormatter.dateFormat = "MMM dd, yyyy"
-         return dateFormatter.string(from: date)
-     }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd, yyyy"
+        return dateFormatter.string(from: date)
+    }
 }
 
 #Preview {
