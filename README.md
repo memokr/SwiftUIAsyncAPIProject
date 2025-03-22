@@ -1,5 +1,10 @@
 # SwiftUI Async/Await API Demo
 
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/7453f8c8-f422-4e29-8b72-75e6e9a94227" width="600">
+</p>
+
 ## Overview
 
 This project demonstrates the power of **SwiftUI** combined with **Swift concurrency** techniques, such as `async`/`await`, to handle API requests efficiently. It provides a clean and modern approach to managing asynchronous data fetching and updating the user interface seamlessly.
